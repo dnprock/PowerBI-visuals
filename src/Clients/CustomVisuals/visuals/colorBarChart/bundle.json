@@ -1,0 +1,27 @@
+{
+    "dateAdded": "2015-10-19T03:16:18.000Z",
+    "dateLastUpdated": "2016-02-24T20:54:49.000Z",
+    "package": {
+        "name": "Color Bar Chart",
+        "displayName": "Color Bar Chart",
+        "version": "0.1.0",
+        "guid": "ColorBarChart1466188802",
+        "description": "Bar chart that use color column.",
+        "build": "1.0.0.0",
+        "author": {
+            "name": "Vida Lab",
+            "email": "contact@vida.io"
+        },
+        "licenseTerms": "MIT",
+        "images": {
+            "icon": "icon.svg",
+            "screenshots": ["1.jpg"],
+            "thumbnail": "thumb.png"
+        },
+        "code": {
+            "typeScript": "colorBarChart.ts",
+            "javaScript": "colorBarChart.js",
+            "css": "colorBarChart.css"
+        }
+    }
+}

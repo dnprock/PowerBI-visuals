@@ -106,6 +106,12 @@ module powerbi.visuals.plugins {
         capabilities: samples.Histogram.capabilities,
         create: () => new samples.Histogram()
     };
+    
+    export var colorBarChart: IVisualPlugin = {
+        name: "colorBarChart",
+        capabilities: samples.ColorBarChart.capabilities,
+        create: () => new samples.ColorBarChart()
+    };
 
 	export var timeline: IVisualPlugin = {
         name: 'timeline',
@@ -136,4 +142,6 @@ module powerbi.visuals.plugins {
         capabilities: samples.LineDotChart.capabilities,
         create: () => new samples.LineDotChart()
     };
+    
+    
 }

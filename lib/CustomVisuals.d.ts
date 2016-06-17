@@ -1894,6 +1894,43 @@ declare module powerbi.visuals.samples {
     }
 }
 declare module powerbi.visuals.samples {
+    interface ColorBarChartData {
+        category: string;
+        value: number;
+    }
+    interface ColorBarChartDataView {
+        values: ColorBarChartData[];
+    }
+    class ColorBarChart implements IVisual {
+        static capabilities: VisualCapabilities;
+        private viewport;
+        private root;
+        private main;
+        private dataView;
+        private NumberOfLabelsOnAxisY;
+        private axes;
+        private axisX;
+        private axisY;
+        private xAxis;
+        private yAxis;
+        private valueFormatter;
+        private xScale;
+        private yScale;
+        private margin;
+        static converter(dataView: DataView): ColorBarChartDataView;
+        init(options: VisualInitOptions): void;
+        update(options: VisualUpdateOptions): void;
+        private renderAxes(viewModel);
+        private renderColumns(viewModel);
+        private setSize(viewport);
+        private updateElements(height, width);
+        private static getFill(dataView);
+        private static getSize(dataView);
+        enumerateObjectInstances(options: EnumerateVisualObjectInstancesOptions): VisualObjectInstance[];
+        destroy(): void;
+    }
+}
+declare module powerbi.visuals.samples {
     import ClassAndSelector = jsCommon.CssConstants.ClassAndSelector;
     const DotPlotProperties: any;
     interface DotPlotSelectors {
@@ -3039,6 +3076,7 @@ declare module powerbi.visuals.plugins {
     var radarChart: IVisualPlugin;
     var dotPlot: IVisualPlugin;
     var histogram: IVisualPlugin;
+    var colorBarChart: IVisualPlugin;
     var timeline: IVisualPlugin;
     var forceGraph: IVisualPlugin;
     let gantt: IVisualPlugin;

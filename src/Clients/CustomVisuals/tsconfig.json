@@ -22,6 +22,7 @@
         "visuals/globeMap/visual/globeMap.ts",
         "visuals/radarChart/visual/radarChart.ts",
         "visuals/histogram/visual/histogram.ts",
+        "visuals/colorBarChart/visual/colorBarChart.ts",
         "visuals/dotPlot/visual/dotPlot.ts",
         "visuals/forceGraph/visual/forceGraph.ts",
         "visuals/gantt/visual/gantt.ts",
