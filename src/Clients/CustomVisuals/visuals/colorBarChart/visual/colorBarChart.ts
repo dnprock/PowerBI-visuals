@@ -30,6 +30,7 @@ module powerbi.visuals.samples {
     export interface ColorBarChartData {
         category: string;
         value: number;
+        color: string;
     }
     
     export interface ColorBarChartDataView {
@@ -79,7 +80,7 @@ module powerbi.visuals.samples {
         private axisY: D3.Selection;
         private xAxis: D3.Svg.Axis;
         private yAxis: D3.Svg.Axis;
-        //private columns: D3.Selection;
+        private columns: D3.Selection;
         private valueFormatter: IValueFormatter;
         private xScale: D3.Scale.OrdinalScale;
         private yScale: D3.Scale.LinearScale;
@@ -101,7 +102,8 @@ module powerbi.visuals.samples {
             for (var row of table.rows) {
                 var chartData: ColorBarChartData = {
                     category: row[0],
-                    value: row[1]
+                    value: row[1],
+                    color: row[2]
                 };
                 viewModel.values.push(chartData);
             }
@@ -156,7 +158,7 @@ module powerbi.visuals.samples {
                         .rangeRoundBands([0, this.viewport.width], .1);
 
             this.yScale = d3.scale.linear()
-                      .domain(d3.extent(viewModel.values.map((v: ColorBarChartData) => { return v.value; })))
+                      .domain([0, d3.max(viewModel.values.map((v: ColorBarChartData) => { return v.value; }))])
                       .range([this.viewport.height, 0]);
 
             this.xAxis = d3.svg.axis()
@@ -176,12 +178,16 @@ module powerbi.visuals.samples {
         }
         
         private renderColumns(viewModel: ColorBarChartDataView): void {
-            /*var xScale = this.xScale;
+            var self = this;
             this.columns = this.main.append('g').selectAll('.column')
-                            .data([])
-                            .enter.append('svg:rect')
+                            .data(viewModel.values)
+                            .enter().append('svg:rect')
                             .attr('class', 'column')
-                            .attr('x', (item: number) => xScale(item));*/
+                            .attr('fill', (item: ColorBarChartData) => { return item.color; })
+                            .attr('x', (item: ColorBarChartData) => this.xScale(item.category))
+                            .attr('y', (item: ColorBarChartData) => this.yScale(item.value))
+                            .attr('width', this.xScale.rangeBand())
+                            .attr('height', (item: ColorBarChartData) => { return self.viewport.height - this.yScale(item.value); });
         }
         
         private setSize(viewport: IViewport): void {

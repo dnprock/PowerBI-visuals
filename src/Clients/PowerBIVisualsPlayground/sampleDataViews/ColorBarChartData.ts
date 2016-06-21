@@ -39,11 +39,11 @@ module powerbi.visuals.sampleDataViews {
 
         private sampleData = [
             [742731.43, 162066.43, 283085.78, 300263.49, 376074.57, 814724.34],
-            [123455.43, 40566.43, 200457.78, 5000.49, 320000.57, 450000.34]
+            ['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd', '#8c564b']
         ];
         
-        private sampleMin: number = 30000;
-        private sampleMax: number = 1000000;
+        //private sampleMin: number = 30000;
+        //private sampleMax: number = 1000000;
 
         private sampleSingleData: number = 55943.67;
 
@@ -76,12 +76,9 @@ module powerbi.visuals.sampleDataViews {
                         roles: { Y: true }
                     },
                     {
-                        displayName: 'Sales Amount (2015)',
-                        isMeasure: true,
-                        format: "$0,000.00",
-                        queryName: 'sales2',
-                        type: powerbi.ValueType.fromDescriptor({ numeric: true }),
-                        roles: { Y: true }
+                        displayName: 'Colors',
+                        queryName: 'Colors',
+                        type: powerbi.ValueType.fromDescriptor({ text: true })
                     }
                 ]
             };
@@ -94,7 +91,7 @@ module powerbi.visuals.sampleDataViews {
                 },
                 {
                     source: dataViewMetadata.columns[2],
-                    // Sales Amount for 2015
+                    // Colors
                     values: this.sampleData[1],
                 }
             ];
@@ -125,11 +122,11 @@ module powerbi.visuals.sampleDataViews {
         
         public randomize(): void {
 
-            this.sampleData = this.sampleData.map((item) => {
+            /*this.sampleData = this.sampleData.map((item) => {
                 return item.map(() => this.getRandomValue(this.sampleMin, this.sampleMax));
             });
 
-            this.sampleSingleData = this.getRandomValue(this.sampleMin, this.sampleMax);
+            this.sampleSingleData = this.getRandomValue(this.sampleMin, this.sampleMax);*/
         }
     }
 }

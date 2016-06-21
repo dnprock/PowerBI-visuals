@@ -1897,6 +1897,7 @@ declare module powerbi.visuals.samples {
     interface ColorBarChartData {
         category: string;
         value: number;
+        color: string;
     }
     interface ColorBarChartDataView {
         values: ColorBarChartData[];
@@ -1913,6 +1914,7 @@ declare module powerbi.visuals.samples {
         private axisY;
         private xAxis;
         private yAxis;
+        private columns;
         private valueFormatter;
         private xScale;
         private yScale;
