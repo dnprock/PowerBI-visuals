@@ -39,32 +39,14 @@ module powerbi.visuals.samples {
 
     export class ColorBarChart implements IVisual {
         public static capabilities: VisualCapabilities = {
-            dataRoles: [{
-                displayName: 'Values',
-                name: 'Values',
-                kind: VisualDataRoleKind.GroupingOrMeasure
-            }],
-            dataViewMappings: [{
-                table: {
-                    rows: {
-                        for: { in: 'Values' },
-                        dataReductionAlgorithm: { window: { count: 100 } }
-                    },
-                    rowCount: { preferred: { min: 1 } }
-                },
-            }],
+            dataRoles: [
+            ],
+            dataViewMappings: [
+            ],
             objects: {
                 general: {
                     displayName: data.createDisplayNameGetter('Visual_General'),
                     properties: {
-                        fill: {
-                            type: { fill: { solid: { color: true } } },
-                            displayName: 'Fill'
-                        },
-                        size: {
-                            type: { numeric: true },
-                            displayName: 'Size'
-                        }
                     },
                 }
             },
@@ -99,7 +81,8 @@ module powerbi.visuals.samples {
             var table = dataView.table;
             if (!table) return viewModel;
             
-            for (var row of table.rows) {
+            for (var i = 0; i < table.rows.length; i++) {
+                var row = table.rows[i];
                 var chartData: ColorBarChartData = {
                     category: row[0],
                     value: row[1],
@@ -183,7 +166,13 @@ module powerbi.visuals.samples {
                             .data(viewModel.values)
                             .enter().append('svg:rect')
                             .attr('class', 'column')
-                            .attr('fill', (item: ColorBarChartData) => { return item.color; })
+                            .attr('fill', (item: ColorBarChartData) => {
+                                if (item.color && typeof item.color == 'string') {
+                                    return item.color;
+                                } else {
+                                    return 'steelblue';
+                                }
+                            })
                             .attr('x', (item: ColorBarChartData) => this.xScale(item.category))
                             .attr('y', (item: ColorBarChartData) => this.yScale(item.value))
                             .attr('width', this.xScale.rangeBand())
@@ -227,39 +216,8 @@ module powerbi.visuals.samples {
                 SVGUtil.translate(0, this.viewport.height));
         }
 
-        private static getFill(dataView: DataView): Fill {
-            if (dataView) {
-                var objects = dataView.metadata.objects;
-                if (objects) {
-                    var general = objects['general'];
-                    if (general) {
-                        var fill = <Fill>general['fill'];
-                        if (fill)
-                            return fill;
-                    }
-                }
-            }
-            return { solid: { color: 'red' } };
-        }
-
-        private static getSize(dataView: DataView): number {
-            if (dataView) {
-                var objects = dataView.metadata.objects;
-                if (objects) {
-                    var general = objects['general'];
-                    if (general) {
-                        var size = <number>general['size'];
-                        if (size)
-                            return size;
-                    }
-                }
-            }
-            return 100;
-        }
-
         public enumerateObjectInstances(options: EnumerateVisualObjectInstancesOptions): VisualObjectInstance[] {
             var instances: VisualObjectInstance[] = [];
-            var dataView = this.dataView;
             switch (options.objectName) {
                 case 'general':
                     var general: VisualObjectInstance = {
@@ -267,8 +225,6 @@ module powerbi.visuals.samples {
                         displayName: 'General',
                         selector: null,
                         properties: {
-                            fill: ColorBarChart.getFill(dataView),
-                            size: ColorBarChart.getSize(dataView)
                         }
                     };
                     instances.push(general);

@@ -1926,8 +1926,6 @@ declare module powerbi.visuals.samples {
         private renderColumns(viewModel);
         private setSize(viewport);
         private updateElements(height, width);
-        private static getFill(dataView);
-        private static getSize(dataView);
         enumerateObjectInstances(options: EnumerateVisualObjectInstancesOptions): VisualObjectInstance[];
         destroy(): void;
     }
